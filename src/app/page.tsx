@@ -5,6 +5,7 @@ import Image from "next/image";
 export default function Home() {
   return (
     <main className="pt-4 space-y-14">
+      {/* Hero */}
       <section className="container space-y-6">
         <div className="space-y-1">
           <h1 className="text-4xl font-lato font-black tracking-tight text-balance">
@@ -53,6 +54,36 @@ export default function Home() {
             iconClassName="w-4 h-4"
           >
             Get in touch
+          </Button>
+        </div>
+      </section>
+
+      {/* Testimonials */}
+      <section className="space-y-4">
+        <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
+          What Our Customers Say
+        </h1>
+        <h4 className="container text-xl font-lato text-brand-text-weak tracking-tight">
+          Read case studies of our happy customers
+        </h4>
+        <div className="w-full h-[390px] relative">
+          <Image
+            src="/images/design_system.jpg"
+            alt="Design system"
+            fill
+            style={{
+              objectFit: "cover",
+              objectPosition: "top",
+            }}
+          />
+        </div>
+        <div className="container pb-4">
+          <Button
+            ghost
+            className="border-none uppercase text-brand-primary px-0 w-full max-w-full justify-between"
+            iconClassName="w-4 h-4"
+          >
+            Design system
           </Button>
         </div>
       </section>
