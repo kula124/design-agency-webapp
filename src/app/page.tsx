@@ -2,6 +2,57 @@ import Button from "@/components/ui/button";
 import Image from "next/image";
 
 // Here we hardcode the content of the home page, but in a real-world scenario, this content would be fetched from a CMS or a DB.
+const testimonials = [
+  {
+    image: "/images/design_system.jpg",
+    buttonText: "Design system",
+  },
+  {
+    image: "/images/from_scratch.jpg",
+    buttonText: "Design from scratch",
+  },
+  {
+    image: "/images/brand_transform.jpg",
+    buttonText: "Brand transformation",
+  },
+  {
+    image: "/images/book_cover.jpg",
+    buttonText: "Book cover design",
+  },
+];
+
+type TestimonialProps = {
+  image: string;
+  buttonText: string;
+};
+
+function Testimonial({ image, buttonText }: TestimonialProps) {
+  return (
+    <div className="border">
+      <div className="relative w-full h-[390px]">
+        <Image
+          src={image}
+          alt="Design system"
+          fill
+          style={{
+            objectFit: "cover",
+            objectPosition: "center",
+          }}
+        />
+      </div>
+      <div className="container py-4 bg-white">
+        <Button
+          ghost
+          className="border-none uppercase text-brand-primary px-0 w-full max-w-full justify-between bg-white"
+          iconClassName="w-4 h-4"
+        >
+          {buttonText}
+        </Button>
+      </div>
+    </div>
+  );
+}
+
 export default function Home() {
   return (
     <main className="pt-4 space-y-14">
@@ -59,34 +110,21 @@ export default function Home() {
       </section>
 
       {/* Testimonials */}
-      <section className="space-y-4">
+      <section className="space-y-12">
         <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
           What Our Customers Say
         </h1>
         <h4 className="container text-xl font-lato text-brand-text-weak tracking-tight">
           Read case studies of our happy customers
         </h4>
-        <div className="w-full h-[390px] relative">
-          <Image
-            src="/images/design_system.jpg"
-            alt="Design system"
-            fill
-            style={{
-              objectFit: "cover",
-              objectPosition: "top",
-            }}
-          />
-        </div>
-        <div className="container pb-4">
-          <Button
-            ghost
-            className="border-none uppercase text-brand-primary px-0 w-full max-w-full justify-between"
-            iconClassName="w-4 h-4"
-          >
-            Design system
-          </Button>
-        </div>
+        {testimonials.map(({ image, buttonText }, index) => (
+          <Testimonial key={index} image={image} buttonText={buttonText} />
+        ))}
       </section>
+
+      <div className="w-full text-center pb-14">
+        <Button secondary>{`Let's build the future`}</Button>
+      </div>
     </main>
   );
 }
