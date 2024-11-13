@@ -111,12 +111,14 @@ export default function Home() {
 
       {/* Testimonials */}
       <section className="space-y-12">
-        <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
-          What Our Customers Say
-        </h1>
-        <h4 className="container text-xl font-lato text-brand-text-weak tracking-tight">
-          Read case studies of our happy customers
-        </h4>
+        <div>
+          <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
+            What Our Customers Say
+          </h1>
+          <h4 className="container text-xl font-lato text-brand-text-weak tracking-tight">
+            Read case studies of our happy customers
+          </h4>
+        </div>
         {testimonials.map(({ image, buttonText }, index) => (
           <Testimonial key={index} image={image} buttonText={buttonText} />
         ))}
