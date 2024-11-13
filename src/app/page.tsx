@@ -31,8 +31,10 @@ export default function Home() {
             src="/images/grow_business.png"
             alt="Grow your business"
             fill
-            objectFit="cover"
-            objectPosition="top"
+            style={{
+              objectFit: "cover",
+              objectPosition: "top",
+            }}
           />
         </div>
         <div className="container space-y-6">
