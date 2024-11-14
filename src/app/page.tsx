@@ -2,6 +2,13 @@ import Button from "@/components/ui/button";
 import Image from "next/image";
 
 // Here we hardcode the content of the home page, but in a real-world scenario, this content would be fetched from a CMS or a DB.
+const heroImages = [
+  "/images/pierre_chatel_unsplash.jpg",
+  "/images/alex_padurariu_unsplash.jpg",
+  "/images/matt_unsplash.jpg",
+  "/images/yoann_siloine_unsplash.jpg",
+];
+
 const testimonials = [
   {
     image: "/images/design_system.jpg",
@@ -20,6 +27,32 @@ const testimonials = [
     buttonText: "Book cover design",
   },
 ];
+
+type HeroImageGridProps = {
+  images: string[];
+};
+
+function HeroImageGrid({ images }: HeroImageGridProps) {
+  return (
+    <div className="grid grid-cols-2 grid-rows-2 gap-2 grow">
+      {images.map((image, index) => (
+        <div key={index} className="relative h-44 w-44 xl:h-52 xl:w-52">
+          <Image
+            priority
+            src={image}
+            alt={`Hero image ${index + 1}`}
+            fill
+            sizes="33vw"
+            style={{
+              objectFit: "cover",
+              objectPosition: "center",
+            }}
+          />
+        </div>
+      ))}
+    </div>
+  );
+}
 
 type TestimonialProps = {
   image: string;
@@ -57,24 +90,34 @@ export default function Home() {
   return (
     <main className="pt-4 space-y-14">
       {/* Hero */}
-      <section className="container space-y-6">
-        <div className="space-y-1">
-          <h1 className="text-4xl font-lato font-black tracking-tight text-balance">
-            Where Vision Meets Innovation
-          </h1>
-          <h4 className="text-xl font-lato text-brand-text-weak tracking-tight">
-            Entrust us with your digital appearance
-          </h4>
+      <section className="container space-y-6 space-x-4 md:flex md:justify-between">
+        <div className="flex flex-col justify-center gap-8 md:max-w-md">
+          <div className="space-y-1">
+            <h1 className="text-4xl font-lato font-black tracking-tight text-balance text-brand-text-strong">
+              Where Vision Meets Innovation
+            </h1>
+            <h4 className="md:hidden text-xl font-lato text-brand-text-weak tracking-tight">
+              Entrust us with your digital appearance
+            </h4>
+          </div>
+          <p className="leading-6">
+            We are a full-service digital agency that specializes in web design,
+            development, and digital marketing. We create digital experiences
+            that are unique to your brand and help you achieve your goals.
+          </p>
+          <div className="space-x-4">
+            <Button secondary>Book a meeting</Button>
+            <Button ghost className="hidden md:inline-flex">
+              Learn more
+            </Button>
+          </div>
         </div>
-        <p className="leading-6">
-          We are a full-service digital agency that specializes in web design,
-          development, and digital marketing. We create digital experiences that
-          are unique to your brand and help you achieve your goals.
-        </p>
-        <Button secondary>Book a meeting</Button>
+        <div className="hidden md:block flex-shrink-0">
+          <HeroImageGrid images={heroImages} />
+        </div>
       </section>
 
-      <section className="space-y-4">
+      <section className="space-y-4 md:hidden">
         <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
           Grow Your Business With Us
         </h1>

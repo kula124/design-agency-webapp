@@ -27,7 +27,7 @@ const Button = ({
         "px-6 py-4 rounded-sm font-lato font-medium leading-none",
         "bg-brand-stroke-weak text-brand-black",
         {
-          "bg-brand-primary text-white": secondary,
+          "bg-brand-primary text-white border border-brand-primary": secondary,
           "border border-brand-stroke-strong bg-brand-fill text-brand-text-weak":
             ghost,
         },
