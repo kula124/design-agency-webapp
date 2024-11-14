@@ -29,7 +29,7 @@ type TestimonialProps = {
 function Testimonial({ image, buttonText }: TestimonialProps) {
   return (
     <div className="border">
-      <div className="relative w-full h-[390px]">
+      <div className="relative w-full h-[300px]">
         <Image
           src={image}
           alt="Design system"
