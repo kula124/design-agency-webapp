@@ -23,18 +23,18 @@ body {
 @layer base {
   :root {
     --brand-black: #1a1a1a;
-    --brand: #4F46E5;
-    --brand-text-strong: #1C1A3D;
-    --brand-text-weak: #5B597A;
-    --brand-stroke-strong: #8685A6;
-    --brand-stroke-weak: #E1E0E5;
-    --brand-fill-bg: #F5F5FA;
+    --brand: #4f46e5;
+    --brand-text-strong: #1c1a3d;
+    --brand-text-weak: #5b597a;
+    --brand-stroke-strong: #8685a6;
+    --brand-stroke-weak: #e1e0e5;
+    --brand-fill-bg: #f5f5fa;
   }
 }
 
 @layer components {
   .container {
-     @apply mx-auto px-8 lg:px-20 xl:px-40 max-w-screen-2xl;
+    @apply mx-auto px-8 lg:px-20 xl:px-40 max-w-screen-xl;
   }
 }
 
