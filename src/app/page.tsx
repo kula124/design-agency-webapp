@@ -117,6 +117,41 @@ export default function Home() {
         </div>
       </section>
 
+      {/* Call to action */}
+
+      <section className="hidden container md:flex justify-between space-x-8 bg-brand-text-strong py-14">
+        <div className="w-full max-w-md h-[350px] relative">
+          <Image
+            src="/images/grow_business.png"
+            alt="Grow your business"
+            fill
+            style={{
+              objectFit: "cover",
+              objectPosition: "top",
+            }}
+          />
+        </div>
+        <div className="flex flex-col justify-center gap-8 max-w-md">
+          <div>
+            <h1 className="text-3xl font-lato font-bold tracking-tight text-balance text-brand-stroke-weak">
+              Grow Your Business With Us
+            </h1>
+            <h4 className="text-xl font-lato text-brand-stroke-strong tracking-tight">
+              Beautify your website and brand
+            </h4>
+          </div>
+          <p className="leading-6 text-brand-stroke-weak">
+            Our clients are the most creative and creative of any firm in the
+            world. Whether it is a project to sell to or a design project to
+            sell to, they all want unique results and products. Our design &
+            development teams focuses on finding the perfect fit for all.
+          </p>
+          <Button ghost className="text-brand-text-strong">
+            Start your journey with us
+          </Button>
+        </div>
+      </section>
+
       <section className="space-y-4 md:hidden">
         <h1 className="container text-3xl font-lato font-bold tracking-tight text-balance">
           Grow Your Business With Us
