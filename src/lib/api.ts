@@ -1,3 +1,5 @@
+import 'server-only'
+
 import { db } from "@/db/drizzle";
 import { pages } from "@/db/schema";
 import { unstable_cache } from "next/cache"; // Replaced by 'use cache' directive in new version of Next.js
