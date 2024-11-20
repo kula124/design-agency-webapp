@@ -6,11 +6,14 @@ import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { pages } from "@/db/schema";
 
-type Page = {
-  title: string;
-  path: `/${string}`;
-};
+type Page = typeof pages.$inferInsert;
+
+// type Page = {
+//   title: string;
+//   path: `/${string}`;
+// };
 
 function processPage(
   page: Page,
