@@ -5,4 +5,5 @@ export const pages = pgTable('pages', {
     title: text('title').notNull().unique(),
     path: text('path').notNull().unique(),
     includeInProd: boolean('include_in_prod').notNull().default(false),
+    order: serial('order').notNull().unique()
 });

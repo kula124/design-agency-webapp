@@ -3,7 +3,7 @@ import { pages } from "@/db/schema";
 import { unstable_cache } from "next/cache"; // Replaced by 'use cache' directive in new version of Next.js
 
 async function getPages() {
-    const data = await db.select().from(pages);
+    const data = await db.select().from(pages).orderBy(pages.order);
     return data;
 }
 
