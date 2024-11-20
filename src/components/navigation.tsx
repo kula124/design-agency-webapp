@@ -10,11 +10,6 @@ import { pages } from "@/db/schema";
 
 type Page = typeof pages.$inferInsert;
 
-// type Page = {
-//   title: string;
-//   path: `/${string}`;
-// };
-
 function processPage(
   page: Page,
   index: number,
@@ -102,7 +97,9 @@ export function Navigation({ pages }: NavigationProps) {
 
         {/* Hidden on mobile */}
         <ul className="hidden md:flex justify-between space-x-4 text-sm uppercase text-brand-text-strong">
-          {pages.map((page, index) => processPage(page, index, pathname))}
+          {pages
+            .filter((page) => page.includeInProd)
+            .map((page, index) => processPage(page, index, pathname))}
         </ul>
 
         {/* Visible on mobile */}
@@ -113,9 +110,11 @@ export function Navigation({ pages }: NavigationProps) {
             { hidden: !isMenuOpen }
           )}
         >
-          {pages.map((page, index) =>
-            processPage(page, index, pathname, closeMenu)
-          )}
+          {pages
+            .filter((page) => page.includeInProd)
+            .map((page, index) =>
+              processPage(page, index, pathname, closeMenu)
+            )}
         </ul>
       </div>
     </nav>
