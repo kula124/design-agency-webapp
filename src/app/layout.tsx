@@ -4,6 +4,14 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 
+import { db } from "@/db/drizzle";
+import { pages } from "@/db/schema";
+
+async function getData() {
+  const data = await db.select().from(pages);
+  return data;
+}
+
 const inter = Inter({
   subsets: ["latin"],
   variable: "--font-inter",
@@ -26,11 +34,15 @@ export const metadata: Metadata = {
   description: "A design agency that cares about your business.",
 };
 
-export default function RootLayout({
+export default async function RootLayout({
   children,
 }: Readonly<{
   children: React.ReactNode;
 }>) {
+  // Fetch data from the database
+  const data = await getData();
+  console.log(data);
+
   return (
     <html lang="en">
       <body
