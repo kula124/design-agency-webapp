@@ -3,14 +3,7 @@ import { Inter, Lato } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-
-import { db } from "@/db/drizzle";
-import { pages } from "@/db/schema";
-
-async function getData() {
-  const data = await db.select().from(pages);
-  return data;
-}
+import { getData } from "@/lib/api";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,15 +33,14 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Fetch data from the database
-  const data = await getData();
-  console.log(data);
+  const pages = await getData();
 
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base`}
       >
-        <Navigation />
+        <Navigation pages={pages} />
         {children}
         <Footer />
       </body>

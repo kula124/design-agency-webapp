@@ -12,27 +12,6 @@ type Page = {
   path: `/${string}`;
 };
 
-// We hardcode pages here, but you could get this information from some external source (e.g. CMS, DB, config file, etc).
-const pages: Page[] = [
-  { title: "Home", path: "/" },
-  {
-    title: "Showcase",
-    path: "/showcase",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
-  {
-    title: "About us",
-    path: "/about",
-  },
-  {
-    title: "Contact us",
-    path: "/contact",
-  },
-];
-
 function processPage(
   page: Page,
   index: number,
@@ -95,7 +74,11 @@ function Hamburger({ isOpen, toggleMenu }: HamburgerProps) {
   );
 }
 
-export function Navigation() {
+type NavigationProps = {
+  pages: Page[];
+};
+
+export function Navigation({ pages }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
