@@ -6,9 +6,18 @@ import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { pages } from "@/db/schema";
+import { TypeNavItem } from "@/content-types";
 
-type Page = typeof pages.$inferInsert;
+// This is essentially the same as if we had written:
+//
+// type Page = {
+//   title: string;
+//   path: string;
+//   includeInProd?: boolean;
+// };
+//
+// The difference is that the type is generated from the Contentful schema.
+type Page = TypeNavItem<"WITHOUT_UNRESOLVABLE_LINKS">["fields"];
 
 function processPage(
   page: Page,

@@ -3,7 +3,7 @@ import { Inter, Lato } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { getNavigation, getMainNavigation } from "@/lib/api";
+import { getMainNavigation } from "@/lib/api";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,12 +32,11 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch data from the database
-  // const pages = await getNavigation();
-
+  // Fetch data from Contentful
   const data = await getMainNavigation();
-  console.log(data.fields);
-  const pages = data.fields.navItems?.map((item) => item.fields);
+  const pages = data.fields.navItems
+    ?.map((navItem) => navItem?.fields)
+    .filter((navItem) => navItem !== undefined);
 
   return (
     <html lang="en">
