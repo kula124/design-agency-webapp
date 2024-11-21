@@ -3,7 +3,7 @@ import { Inter, Lato } from "next/font/google";
 import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
-import { getNavigation } from "@/lib/api";
+import { getNavigation, getMainNavigation } from "@/lib/api";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -33,7 +33,11 @@ export default async function RootLayout({
   children: React.ReactNode;
 }>) {
   // Fetch data from the database
-  const pages = await getNavigation();
+  // const pages = await getNavigation();
+
+  const data = await getMainNavigation();
+  console.log(data.fields);
+  const pages = data.fields.navItems?.map((item) => item.fields);
 
   return (
     <html lang="en">
