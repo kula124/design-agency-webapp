@@ -38,11 +38,21 @@ export const getMainNavigation = unstable_cache(async () => {
 
 }, ['navigation'], { revalidate: HOUR, tags: ['navigation'] });
 
+export const getProducts = unstable_cache(
+    async ({
+        skip = 0,
+        limit = Number(process.env.PRODUCTS_PAGE_SIZE)
+    }: { skip?: number, limit?: number } = {}) => {
+        const data = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeProductSkeleton>({
+            content_type: 'product',
+            limit,
+            skip,
+        });
 
-export const getProducts = unstable_cache(async () => {
-    const data = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeProductSkeleton>({
-        content_type: 'product',
-    });
+        return data;
+    }, ['products'], { revalidate: HOUR, tags: ['products'] });
 
-    return data;
-}, ['products'], { revalidate: HOUR, tags: ['products'] });
+export async function getProductsCount() {
+    const data = await getProducts({ skip: 0, limit: 0 });
+    return data.total;
+};
