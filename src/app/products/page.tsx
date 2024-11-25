@@ -1,7 +1,7 @@
-import Image from "next/image";
 import { getProducts, getProductsCount } from "@/lib/api";
 import type { Metadata } from "next";
 import Pagination from "./_components/pagination";
+import ProductCard from "./_components/product-card";
 
 export const metadata: Metadata = {
   title: "Products",
@@ -28,27 +28,18 @@ export default async function ProductsPage({
   const data = await getProducts({ skip });
 
   return (
-    <main className="flex min-h-screen flex-col items-center p-10 space-y-12">
-      <h1 className="text-6xl font-extrabold tracking-tight">Products</h1>
-      <Pagination page={currentPage} totalPages={pagesCount} />
-      <ul className="w-full space-y-4">
+    <main className="container flex min-h-screen flex-col items-center p-10 space-y-14">
+      <h1 className="text-6xl font-lato font-extrabold tracking-tight">
+        Products
+      </h1>
+      <ul className="w-full max-w-screen-md grid grid-cols-2 gap-8">
         {data.items.map((product) => (
           <li key={product.sys.id}>
-            <h2>{product.fields.name}</h2>
-            <p>{product.fields.description}</p>
-            {
-              <div className="relative w-96 h-60">
-                <Image
-                  fill
-                  src={`https:${product.fields.heroImage?.fields.file?.url}`}
-                  alt={`https:${product.fields.heroImage?.fields.title}`}
-                  style={{ objectFit: "cover" }}
-                />
-              </div>
-            }
+            <ProductCard product={product.fields} />
           </li>
         ))}
       </ul>
+      <Pagination page={currentPage} totalPages={pagesCount} />
     </main>
   );
 }
