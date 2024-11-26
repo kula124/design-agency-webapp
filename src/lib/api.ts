@@ -58,3 +58,13 @@ export async function getProductsCount() {
     const data = await getProducts({ skip: 0, limit: 0 });
     return data.total;
 };
+
+export const getProduct = (id: number) => unstable_cache(
+    async () => {
+        const data = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeProductSkeleton>({
+            content_type: 'product',
+            'fields.id': id,
+            limit: 1,
+        });
+        return data.items[0];
+    }, [`product_${id}`], { revalidate: HOUR, tags: [`product_${id}`] });
