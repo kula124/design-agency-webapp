@@ -96,7 +96,7 @@ export function Navigation({ pages }: NavigationProps) {
 
   return (
     <nav
-      className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill"
+      className="py-8 border-b border-brand-stroke-weak sticky top-0 z-20 bg-brand-fill"
       ref={navRef}
     >
       <div className="container flex justify-between items-center">
