@@ -72,7 +72,7 @@ export default async function ProductDetail({ params }: ProductDetailProps) {
         </div>
       </div>
       {product.fields.richTextDescription && (
-        <article className="max-w-4xl mx-auto">
+        <article className="w-full max-w-4xl mx-auto">
           <div className="bg-white shadow-lg rounded-sm overflow-hidden">
             <div
               className="p-8 prose max-w-none prose-p:text-brand-text-strong prose-h1:text-brand-text-strong prose-h2:text-brand-text-strong"
