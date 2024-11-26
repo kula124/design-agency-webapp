@@ -41,7 +41,7 @@ export default async function RootLayout({
   return (
     <html lang="en">
       <body
-        className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base`}
+        className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base min-h-svh flex flex-col`}
       >
         <Navigation pages={pages} />
         {children}
