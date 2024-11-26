@@ -31,3 +31,15 @@ Contentful > GraphQL > [**GraphQL tools for getting started with Contentful**](h
 > **IMPORTANT**: To get the feeling of how you can access and query your data using the GraphQL API, you can use GraphiQL app within Contentful dashboard. To do so, you have to install the app first. Go to the Contentful dashboard, click on the "Apps" tab, and search for "GraphiQL". Install the app and start querying your data.
 
 Contentful > Guides > [**How to Integrate Contentful and Next.js**](https://www.contentful.com/blog/integrate-contentful-next-js-app-router/)
+
+## Tailwind TYPOGRAPHY and Contentful Rich Text
+
+Contentful provides a rich text field type that allows you to create and edit rich text content. You can use `rich-text-html-renderer` to render rich text content in your application.
+
+[**`rich-text-html-renderer`**](https://www.npmjs.com/package/@contentful/rich-text-html-renderer)
+
+In order to style rich text content, you can use the Tailwind Typography plugin. It provides a set of utilities for styling rich text content.
+
+Tailwind > [**Typography (`prose`)**](https://tailwindcss.com/docs/plugins#typography)
+
+GitHub > [**tailwind-typography (`prose`)**](https://github.com/tailwindlabs/tailwindcss-typography)

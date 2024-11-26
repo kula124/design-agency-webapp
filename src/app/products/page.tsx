@@ -28,7 +28,7 @@ export default async function ProductsPage({
   const data = await getProducts({ skip });
 
   return (
-    <main className="container flex min-h-screen flex-col items-center py-8 gap-8">
+    <main className="container flex flex-col flex-1 items-center space-y-8 my-8">
       <Pagination page={currentPage} totalPages={pagesCount} />
       <ul className="w-full max-w-screen-lg flex flex-wrap justify-center gap-8">
         {data.items.map((product) => (

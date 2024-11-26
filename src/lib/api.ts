@@ -67,4 +67,9 @@ export const getProduct = (id: number) => unstable_cache(
             limit: 1,
         });
         return data.items[0];
-    }, [`product_${id}`], { revalidate: HOUR, tags: [`product_${id}`] });
+    },
+    [`product_${id}`], // Cache key based on the product ID
+    {
+        revalidate: HOUR, // Revalidation interval
+        tags: [`product_${id}`] // Tags used for revalidation (e.g. when clearing cache from the CMS)
+    });
