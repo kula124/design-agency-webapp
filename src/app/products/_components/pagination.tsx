@@ -36,49 +36,47 @@ const Pagination = ({ page, totalPages }: PaginationProps) => {
     "bg-brand-stroke-weak text-brand-text-weak cursor-not-allowed";
 
   return (
-    <div className="flex items-baseline gap-8">
-      <div className="flex gap-4 items-baseline">
-        <button
-          className={`${buttonClass} ${
-            isFirstPage ? disabledButtonClass : activeButtonClass
-          }`}
-          onClick={() => setPageParam("page", 1)}
-          disabled={isFirstPage}
-        >
-          First
-        </button>
-        <button
-          className={`${buttonClass} ${
-            isFirstPage ? disabledButtonClass : activeButtonClass
-          }`}
-          onClick={() => setPageParam("page", page > 1 ? page - 1 : 1)}
-          disabled={isFirstPage}
-        >
-          Previous
-        </button>
-        <div className="text-sm">
-          Page <span className="font-bold">{page}</span> of{" "}
-          <span className="font-bold">{totalPages}</span>
-        </div>
-        <button
-          className={`${buttonClass} ${
-            isLastPage ? disabledButtonClass : activeButtonClass
-          }`}
-          onClick={() => setPageParam("page", page + 1)}
-          disabled={isLastPage}
-        >
-          Next
-        </button>
-        <button
-          className={`${buttonClass} ${
-            isLastPage ? disabledButtonClass : activeButtonClass
-          }`}
-          onClick={() => setPageParam("page", totalPages)}
-          disabled={isLastPage}
-        >
-          Last
-        </button>
+    <div className="flex gap-4 items-baseline">
+      <button
+        className={`${buttonClass} ${
+          isFirstPage ? disabledButtonClass : activeButtonClass
+        }`}
+        onClick={() => setPageParam("page", 1)}
+        disabled={isFirstPage}
+      >
+        First
+      </button>
+      <button
+        className={`${buttonClass} ${
+          isFirstPage ? disabledButtonClass : activeButtonClass
+        }`}
+        onClick={() => setPageParam("page", page > 1 ? page - 1 : 1)}
+        disabled={isFirstPage}
+      >
+        Previous
+      </button>
+      <div className="text-sm">
+        <span className="font-bold">{page}</span> of{" "}
+        <span className="font-bold">{totalPages}</span>
       </div>
+      <button
+        className={`${buttonClass} ${
+          isLastPage ? disabledButtonClass : activeButtonClass
+        }`}
+        onClick={() => setPageParam("page", page + 1)}
+        disabled={isLastPage}
+      >
+        Next
+      </button>
+      <button
+        className={`${buttonClass} ${
+          isLastPage ? disabledButtonClass : activeButtonClass
+        }`}
+        onClick={() => setPageParam("page", totalPages)}
+        disabled={isLastPage}
+      >
+        Last
+      </button>
     </div>
   );
 };

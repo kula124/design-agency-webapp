@@ -11,7 +11,7 @@ const ProductCard = ({
   product: TypeProduct<"WITHOUT_UNRESOLVABLE_LINKS">["fields"];
 }) => {
   return (
-    <div className="bg-white rounded-sm shadow-md overflow-hidden">
+    <div className="bg-white rounded-sm shadow-md overflow-hidden min-w-96">
       <div className="p-4">
         <h2 className="text-xl font-black text-brand-text-weak">
           {product.name}

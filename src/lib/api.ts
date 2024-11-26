@@ -47,6 +47,7 @@ export const getProducts = unstable_cache(
             content_type: 'product',
             limit,
             skip,
+            select: ['fields.name', 'fields.description', 'fields.heroImage', 'fields.categories', 'fields.id', 'sys.id'],
         });
 
         return data;

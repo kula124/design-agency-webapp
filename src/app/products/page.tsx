@@ -28,18 +28,15 @@ export default async function ProductsPage({
   const data = await getProducts({ skip });
 
   return (
-    <main className="container flex min-h-screen flex-col items-center p-10 space-y-14">
-      <h1 className="text-6xl font-lato font-extrabold tracking-tight">
-        Products
-      </h1>
-      <ul className="w-full max-w-screen-md grid grid-cols-2 gap-8">
+    <main className="container flex min-h-screen flex-col items-center py-8 gap-8">
+      <Pagination page={currentPage} totalPages={pagesCount} />
+      <ul className="w-full max-w-screen-lg flex flex-wrap justify-center gap-8">
         {data.items.map((product) => (
           <li key={product.sys.id}>
             <ProductCard product={product.fields} />
           </li>
         ))}
       </ul>
-      <Pagination page={currentPage} totalPages={pagesCount} />
     </main>
   );
 }
