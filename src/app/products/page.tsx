@@ -13,14 +13,17 @@ type Category = TypeCategory<"WITHOUT_UNRESOLVABLE_LINKS">;
 type ProductsPageProps = {
   searchParams: {
     page: string;
-    category: Category["fields"]["label"];
+    categories: string;
   };
 };
 
 const PAGE_SIZE = Number(process.env.PRODUCTS_PAGE_SIZE) || 6;
 
-function hasMatchingCategory(filter: string, categories?: Category[]) {
-  return categories?.some((category) => category?.fields.label === filter);
+function hasMatchingCategories(filters: string[], categories?: Category[]) {
+  if (filters.length === 0) return true; // If no filters are selected, show all products
+  return filters.some((filter) =>
+    categories?.some((category) => category?.fields.label === filter)
+  );
 }
 
 export default async function ProductsPage({
@@ -41,21 +44,22 @@ export default async function ProductsPage({
 
   const data = await getProducts({ skip });
 
+  const categoryFilters =
+    (searchParams.categories as string)?.split(",").filter(Boolean) || [];
+
+  const filteredProducts = data.items.filter((product) => {
+    const productCategories = product.fields.categories as Category[];
+    return hasMatchingCategories(categoryFilters, productCategories);
+  });
+
   return (
     <main className="container flex flex-col flex-1 items-center space-y-8 my-8">
       <Pagination page={currentPage} totalPages={pagesCount} />
       <CategoryFilter categories={categories} />
       <ul className="w-full max-w-screen-lg flex flex-wrap justify-center gap-8">
-        {data.items.map((product) => {
-          const productCategories = product.fields.categories as Category[];
-          const matchesCategory = searchParams.category
-            ? hasMatchingCategory(searchParams.category, productCategories)
-            : true;
-
-          if (!matchesCategory) return null;
-
-          return <ProductCard key={product.sys.id} product={product.fields} />;
-        })}
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.sys.id} product={product.fields} />
+        ))}
       </ul>
     </main>
   );

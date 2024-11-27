@@ -12,34 +12,38 @@ type CategoryFilterProps = {
 
 const CategoryFilter = ({ categories }: CategoryFilterProps) => {
   const searchParams = useSearchParams();
-  const categoryFilter: string = searchParams.get("category") || "";
+  // const categoryFilter: string = searchParams.get("category") || "";
+  const categoryFilters: string[] =
+    searchParams.get("categories")?.split(",") || [];
   const router = useRouter();
   const pathname = usePathname();
 
-  const setSearchParam = useCallback(
-    (name: string, value: string) => {
-      const currentParams = searchParams.toString();
-      const params = new URLSearchParams(currentParams);
-
-      params.set(name, value);
-      // If search params are still the same there's no need to do anything
-      if (currentParams === params.toString()) return;
-
-      router.replace(pathname + "?" + params.toString(), { scroll: false });
-    },
-    [searchParams, pathname, router]
-  );
-
-  const deleteSearchParam = useCallback(
-    (name: string) => {
-      const currentParams = searchParams.toString();
-      const params = new URLSearchParams(currentParams);
-
-      params.delete(name);
+  const updateSearchParams = useCallback(
+    (categories: string[]) => {
+      const params = new URLSearchParams(searchParams);
+      if (categories.length > 0) {
+        params.set("categories", categories.join(","));
+      } else {
+        params.delete("categories");
+      }
       router.replace(`${pathname}?${params.toString()}`, { scroll: false });
     },
     [searchParams, pathname, router]
   );
+
+  const toggleCategory = useCallback(
+    (category: string) => {
+      const updatedCategories = categoryFilters.includes(category)
+        ? categoryFilters.filter((c) => c !== category)
+        : [...categoryFilters, category];
+      updateSearchParams(updatedCategories);
+    },
+    [categoryFilters, updateSearchParams]
+  );
+
+  const resetFilters = useCallback(() => {
+    updateSearchParams([]);
+  }, [updateSearchParams]);
 
   return (
     <ul className="flex flex-wrap gap-4">
@@ -49,24 +53,27 @@ const CategoryFilter = ({ categories }: CategoryFilterProps) => {
             className={cn(
               "px-3 py-1 rounded-full text-sm transition-colors bg-white border border-brand-stroke-weak text-brand-text-strong hover:bg-brand-stroke-weak",
               {
+                "bg-brand-stroke-weak": categoryFilters.includes(
+                  category.fields.label
+                ),
                 "opacity-60":
-                  categoryFilter !== "" &&
-                  categoryFilter !== category.fields.label,
+                  categoryFilters.length > 0 &&
+                  !categoryFilters.includes(category.fields.label),
               }
             )}
-            onClick={() => setSearchParam("category", category.fields.label)}
+            onClick={() => toggleCategory(category.fields.label)}
           >
             {category.fields.label}
           </button>
         </li>
       ))}
-      {categoryFilter !== "" && (
+      {categoryFilters.length > 0 && (
         <li>
           <button
             className="px-3 py-1 rounded-full text-sm transition-colors bg-brand-stroke-weak border border-brand-stroke-weak text-brand-text-weak flex items-center hover:text-brand-text-strong"
-            onClick={() => deleteSearchParam("category")}
+            onClick={resetFilters}
           >
-            Reset filter
+            Reset filters
             <XIcon className="w-4 h-4 ml-1" />
           </button>
         </li>
