@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter, usePathname, useSearchParams } from "next/navigation";
-import { useCallback } from "react";
+import { useCallback, useMemo } from "react";
 import { XIcon } from "lucide-react";
 import { TypeCategory } from "@/content-types";
 import { cn } from "@/lib/utils";
@@ -12,9 +12,9 @@ type CategoryFilterProps = {
 
 const CategoryFilter = ({ categories }: CategoryFilterProps) => {
   const searchParams = useSearchParams();
-  // const categoryFilter: string = searchParams.get("category") || "";
-  const categoryFilters: string[] =
-    searchParams.get("categories")?.split(",") || [];
+  const categoryFilters: string[] = useMemo(() => {
+    return searchParams.get("categories")?.split(",") || [];
+  }, [searchParams]);
   const router = useRouter();
   const pathname = usePathname();
 
