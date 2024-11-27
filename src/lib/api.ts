@@ -4,7 +4,7 @@ import { db } from "@/db/drizzle";
 import { pages } from "@/db/schema";
 import contentfulClient from "@/lib/contentfulClient";
 import { unstable_cache } from "next/cache"; // Replaced by 'use cache' directive in new version of Next.js
-import { TypeNavigationSkeleton, TypeProductSkeleton } from '@/content-types';
+import { TypeCategorySkeleton, TypeNavigationSkeleton, TypeProductSkeleton } from '@/content-types';
 
 const MINUTE = 60;
 const HOUR = 60 * MINUTE;
@@ -73,3 +73,11 @@ export const getProduct = (id: number) => unstable_cache(
         revalidate: HOUR, // Revalidation interval
         tags: [`product_${id}`] // Tags used for revalidation (e.g. when clearing cache from the CMS)
     });
+
+export const getCategories = unstable_cache(
+    async () => {
+        const data = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeCategorySkeleton>({
+            content_type: 'category',
+        });
+        return data.items;
+    }, ['categories'], { revalidate: HOUR, tags: ['categories'] });
