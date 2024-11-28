@@ -24,6 +24,8 @@ export const getNavigation = unstable_cache(getPages, ['pages'], { revalidate: D
 // Fetching data from Contentful (a headless CMS) using the 'contentful.js' library.
 // This library is a wrapper around Contentful Delivery REST API.
 // (https://github.com/contentful/contentful.js)
+//
+// IMPORTANT: We do not handle errors in this example. You should always handle errors.
 // =====================================================================================
 export const getMainNavigation = unstable_cache(async () => {
     // Check https://github.com/contentful/contentful.js/blob/master/ADVANCED.md#link-resolution
