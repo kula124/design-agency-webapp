@@ -1,0 +1,4 @@
+name,email,password
+Alice Johnson,alice@example.com,$2b$10$1JzylgBMWUGEd7HRPjYejesSS6PMudYJqIK9a17P5NswtoBkq1Eo2
+Bob Smith,bob@example.com,$2b$10$X5OEQpI0C3sYl4XRYPduYOCa3U5ToDyVWVkqQgRrA6KRvmCrU1Qem
+Charlie Brown,charlie@example.com,$2b$10$uCwBBT7dzMrRuqJOHT6aAukthq3r6ASiU4shURSF7xd2H9Zh2vHZm

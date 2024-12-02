@@ -1,7 +1,8 @@
 import 'server-only'
 
 import { db } from "@/db/drizzle";
-import { pages } from "@/db/schema";
+import { pages, users } from "@/db/schema";
+import { eq } from "drizzle-orm";
 import contentfulClient from "@/lib/contentfulClient";
 import { unstable_cache } from "next/cache"; // Replaced by 'use cache' directive in new version of Next.js
 import { TypeCategorySkeleton, TypeNavigationSkeleton, TypeProductSkeleton } from '@/content-types';
@@ -19,6 +20,15 @@ async function getPages() {
 }
 export const getNavigation = unstable_cache(getPages, ['pages'], { revalidate: DAY, tags: ['pages'] });
 
+export async function getUser(email: string) {
+    const data = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    if (data.length > 0) {
+        // !!! You should never return sensitive data like password hashes. !!!
+        const { id, email, name } = data[0];
+        return { id, email, name };
+    }
+    return null;
+}
 
 // =====================================================================================
 // Fetching data from Contentful (a headless CMS) using the 'contentful.js' library.
