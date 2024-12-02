@@ -30,6 +30,11 @@ export async function getUser(email: string) {
     return null;
 }
 
+export async function getUserWithPassword(email: string) {
+    const data = await db.select().from(users).where(eq(users.email, email)).limit(1);
+    return data[0] || null;
+}
+
 // =====================================================================================
 // Fetching data from Contentful (a headless CMS) using the 'contentful.js' library.
 // This library is a wrapper around Contentful Delivery REST API.

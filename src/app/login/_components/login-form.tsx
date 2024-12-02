@@ -2,12 +2,19 @@
 
 import { AtSign, KeyIcon, AlertCircle } from "lucide-react";
 import Button from "@/components/ui/button";
+import { signInAction } from "@/lib/actions";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useForm } from "react-hook-form";
 import { LoginSchema } from "@/schema/login";
 
 function SubmitButton({ isSubmitting }: { isSubmitting?: boolean }) {
   return (
-    <Button secondary className="mt-10 min-w-full justify-center">
+    <Button
+      secondary
+      className="mt-10 min-w-full justify-center"
+      disabled={isSubmitting}
+      type="submit"
+    >
       {isSubmitting ? "Signing in ..." : "Sign in"}
     </Button>
   );
@@ -21,11 +28,32 @@ export default function LoginForm() {
   const {
     register,
     handleSubmit,
+    clearErrors,
+    setError,
     formState: { errors, isSubmitting },
   } = form;
 
+  const searchParams = useSearchParams();
+  const redirectTo = searchParams.get("redirectTo");
+  const otherParams = new URLSearchParams(searchParams.toString());
+  otherParams.delete("redirectTo");
+  const router = useRouter();
+
   const submit = async (formData: LoginSchema) => {
-    console.log({ formData });
+    clearErrors();
+
+    const data = await signInAction(formData);
+
+    if (data.success) {
+      router.push(
+        redirectTo
+          ? `${decodeURIComponent(redirectTo)}?${otherParams.toString()}`
+          : "/"
+      );
+      router.refresh();
+    } else {
+      setError("root", { message: data.error });
+    }
   };
 
   return (

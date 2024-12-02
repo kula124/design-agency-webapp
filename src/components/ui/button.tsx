@@ -9,6 +9,8 @@ type ButtonProps = {
   ghost?: boolean;
   className?: string;
   iconClassName?: string;
+  disabled?: boolean;
+  [key: string]: unknown;
 };
 
 const Button = ({
@@ -18,6 +20,8 @@ const Button = ({
   onClick,
   secondary,
   ghost,
+  disabled,
+  ...rest
 }: ButtonProps) => {
   return (
     <button
@@ -30,17 +34,21 @@ const Button = ({
           "bg-brand-primary text-white border border-brand-primary": secondary,
           "border border-brand-stroke-strong bg-brand-fill text-brand-text-weak":
             ghost,
+          "cursor-not-allowed opacity-50": disabled,
+          "hover:opacity-90": !disabled,
         },
-        "hover:opacity-90",
         className
       )}
-      onClick={onClick}
+      onClick={disabled ? undefined : onClick} // Prevent interaction when disabled
+      aria-disabled={disabled}
+      disabled={disabled}
+      {...rest}
     >
       <span>{children}</span>
       <ChevronRight
         className={cn(
           "w-4 h-4 stroke-[2] transition-transform duration-300 ease-in-out transform",
-          "group-hover:translate-x-1",
+          { "group-hover:translate-x-1": !disabled },
           iconClassName
         )}
       />

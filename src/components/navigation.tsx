@@ -7,6 +7,9 @@ import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { TypeNavItem } from "@/content-types";
+import SigninButton from "./signin-button";
+import SignoutButton from "./signout-button";
+import { Session } from "next-auth";
 
 // This is essentially the same as if we had written:
 //
@@ -83,14 +86,17 @@ function Hamburger({ isOpen, toggleMenu }: HamburgerProps) {
 
 type NavigationProps = {
   pages: Page[];
+  session?: Session | null;
 };
 
-export function Navigation({ pages }: NavigationProps) {
+export function Navigation({ pages, session }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
+
+  const user = session?.user;
 
   useClickOutside(navRef, closeMenu);
 
@@ -110,6 +116,11 @@ export function Navigation({ pages }: NavigationProps) {
             .filter((page) => page.includeInProd)
             .map((page, index) => processPage(page, index, pathname))}
         </ul>
+        {user ? (
+          <SignoutButton className="hidden md:block" />
+        ) : (
+          <SigninButton className="hidden md:block" />
+        )}
 
         {/* Visible on mobile */}
         <Hamburger isOpen={isMenuOpen} toggleMenu={toggleMenu} />
@@ -124,6 +135,12 @@ export function Navigation({ pages }: NavigationProps) {
             .map((page, index) =>
               processPage(page, index, pathname, closeMenu)
             )}
+
+          {user ? (
+            <SignoutButton className="w-full md:hidden" onClick={closeMenu} />
+          ) : (
+            <SigninButton className="w-full md:hidden" onClick={closeMenu} />
+          )}
         </ul>
       </div>
     </nav>

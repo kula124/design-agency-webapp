@@ -1,4 +1,5 @@
 import Button from "@/components/ui/button";
+import { getSession } from "@/auth";
 import Image from "next/image";
 
 // ============================================================================
@@ -146,9 +147,16 @@ function TestimonialCard({
   );
 }
 
-export default function Home() {
+export default async function Home() {
+  const session = await getSession();
+  console.log(session);
   return (
     <main className="pt-4 space-y-14">
+      {session && (
+        <div className="container py-10 text-lg text-red-500">
+          Welcome, {session.user.name}!
+        </div>
+      )}
       {/* Hero */}
       <section className="container space-y-6 space-x-4 md:flex md:justify-between">
         <div className="flex flex-col justify-center gap-8 md:max-w-md">
