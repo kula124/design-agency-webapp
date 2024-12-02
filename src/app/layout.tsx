@@ -1,9 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Lato } from "next/font/google";
 import "./globals.css";
-import { Navigation } from "@/components/navigation";
+import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
-import { getMainNavigation } from "@/lib/api";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -32,18 +31,12 @@ export default async function RootLayout({
 }: Readonly<{
   children: React.ReactNode;
 }>) {
-  // Fetch data from Contentful
-  const data = await getMainNavigation();
-  const pages = data.fields.navItems
-    ?.map((navItem) => navItem?.fields)
-    .filter((navItem) => navItem !== undefined);
-
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base min-h-svh flex flex-col`}
       >
-        <Navigation pages={pages} />
+        <Header />
         {children}
         <Footer />
       </body>
