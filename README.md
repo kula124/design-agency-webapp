@@ -1,15 +1,9 @@
 # Building Your Application
 
-We will use the following library to handle authentication in our Next.js application:
+For fun, you can try to integrate an AI model into your application. Many providers offer free credits to get started. Vercel provides an excellent AI SDK that you can use to integrate AI models into your application.
 
-[**Auth.js**](https://authjs.dev/)
+Getting Started > [**Next.js App Router**](https://sdk.vercel.ai/docs/getting-started/nextjs-app-router)
 
-We will follow this learning resource to implement a simplistic authentication in our Next.js application:
-
-Learn Next.js > [**Adding authentication**](https://nextjs.org/learn/dashboard-app/adding-authentication)
-
-> To better understand intricate details of authentication and how to protect your application data, please refer to:
+> NOTE: In the present branch, I have integrated the AI model offered by X (ex. Twitter) called `grok`. For more info: [**xAI**](https://x.ai/).
 >
-> Building Your Application > [**Authentication**](https://nextjs.org/docs/app/building-your-application/authentication)
->
-> **WARNING:** Authentication, authorization, and user management are critical aspects of web development. Implementing these features securely is a complex task. We recommend using a well-tested libraries rather than building your own.
+> To access/test the model you have to add an appropriate API key (in `.env`). The UI chat interface is available at `/ai` route.
