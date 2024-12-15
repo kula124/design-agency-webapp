@@ -1,3 +1,4 @@
+import { getNavigation } from "@/lib/api";
 import Logo from "./logo";
 import {
   FaFacebookSquare,
@@ -14,12 +15,16 @@ const services = [
   "Design Systems",
   "Rebranding",
   "Marketing",
-  "Market Reasearch",
+  "Market Research",
   "User Journey",
 ];
-const sitemap = ["Home", "About", "Showcase", "Blog", "About Us", "Contact Us"];
 
-export function Footer() {
+export async function Footer() {
+  const pages = await getNavigation();
+  const sitemap = pages
+    .filter((page) => page.includeInProd)
+    .map((page) => page.title);
+
   return (
     <footer className="bg-brand-text-strong py-12 text-center space-y-12">
       <Logo theme="dark" className="md:hidden text-4xl" />

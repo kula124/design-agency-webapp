@@ -6,32 +6,9 @@ import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
+import { pages } from "@/db/schema";
 
-type Page = {
-  title: string;
-  path: `/${string}`;
-};
-
-// We hardcode pages here, but you could get this information from some external source (e.g. CMS, DB, config file, etc).
-const pages: Page[] = [
-  { title: "Home", path: "/" },
-  {
-    title: "Showcase",
-    path: "/showcase",
-  },
-  {
-    title: "Blog",
-    path: "/blog",
-  },
-  {
-    title: "About us",
-    path: "/about",
-  },
-  {
-    title: "Contact us",
-    path: "/contact",
-  },
-];
+type Page = typeof pages.$inferInsert;
 
 function processPage(
   page: Page,
@@ -95,7 +72,11 @@ function Hamburger({ isOpen, toggleMenu }: HamburgerProps) {
   );
 }
 
-export function Navigation() {
+type NavigationProps = {
+  pages: Page[];
+};
+
+export function Navigation({ pages }: NavigationProps) {
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
@@ -116,7 +97,9 @@ export function Navigation() {
 
         {/* Hidden on mobile */}
         <ul className="hidden md:flex justify-between space-x-4 text-sm uppercase text-brand-text-strong">
-          {pages.map((page, index) => processPage(page, index, pathname))}
+          {pages
+            .filter((page) => page.includeInProd)
+            .map((page, index) => processPage(page, index, pathname))}
         </ul>
 
         {/* Visible on mobile */}
@@ -127,9 +110,11 @@ export function Navigation() {
             { hidden: !isMenuOpen }
           )}
         >
-          {pages.map((page, index) =>
-            processPage(page, index, pathname, closeMenu)
-          )}
+          {pages
+            .filter((page) => page.includeInProd)
+            .map((page, index) =>
+              processPage(page, index, pathname, closeMenu)
+            )}
         </ul>
       </div>
     </nav>
