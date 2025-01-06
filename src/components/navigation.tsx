@@ -6,9 +6,18 @@ import { usePathname } from "next/navigation";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
-import { pages } from "@/db/schema";
+import { TypeNavItem } from "@/content-types";
 
-type Page = typeof pages.$inferInsert;
+// This is essentially the same as if we had written:
+//
+// type Page = {
+//   title: string;
+//   path: string;
+//   includeInProd?: boolean;
+// };
+//
+// The difference is that the type is generated from the Contentful schema.
+type Page = TypeNavItem<"WITHOUT_UNRESOLVABLE_LINKS">["fields"];
 
 function processPage(
   page: Page,
@@ -87,7 +96,7 @@ export function Navigation({ pages }: NavigationProps) {
 
   return (
     <nav
-      className="py-8 border-b border-brand-stroke-weak sticky top-0 z-10 bg-brand-fill"
+      className="py-8 border-b border-brand-stroke-weak sticky top-0 z-20 bg-brand-fill"
       ref={navRef}
     >
       <div className="container flex justify-between items-center">

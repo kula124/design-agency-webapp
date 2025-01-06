@@ -46,7 +46,7 @@ export default async function BlogPage({ searchParams }: BlogPageProps) {
 
   const posts = await getPosts({ _start, _limit });
   return (
-    <main className="flex min-h-screen max-w-3xl m-auto flex-col items-center p-10">
+    <main className="flex flex-col flex-1 max-w-3xl m-auto items-center p-10">
       <h1 className="text-6xl font-extrabold tracking-tight mb-10">Blog</h1>
       <Pagination currentPage={currentPage} pagesCount={pagesCount} />
       <ul className="w-full space-y-4">{posts.map(processPost)}</ul>
