@@ -23,6 +23,8 @@ const ProductCard = ({
       <Link href={`products/${product.id}`} className="block">
         <div className="relative w-full h-64">
           <Image
+            // The "key" property forces the image to re-render; this prevents the problem where the previous product image is displayed (for a split second) while the new product image is loading.
+            key={product.heroImage?.sys.id}
             src={`https:${product.heroImage?.fields.file?.url}`}
             alt={product.heroImage?.fields.title || "Product image"}
             fill
