@@ -43,7 +43,7 @@ export const getMainNavigation = unstable_cache(async () => {
 export const getProducts = unstable_cache(
     async ({
         skip = 0,
-        limit = Number(process.env.PRODUCTS_PAGE_SIZE)
+        limit = Number(process.env.PRODUCTS_PAGE_SIZE) || 4
     }: { skip?: number, limit?: number } = {}) => {
         const data = await contentfulClient.withoutUnresolvableLinks.getEntries<TypeProductSkeleton>({
             content_type: 'product',
