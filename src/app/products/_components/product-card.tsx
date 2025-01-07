@@ -24,7 +24,7 @@ const ProductCard = ({
         <div className="relative w-full h-64">
           <Image
             src={`https:${product.heroImage?.fields.file?.url}`}
-            alt={`https:${product.heroImage?.fields.title}`}
+            alt={product.heroImage?.fields.title || "Product image"}
             fill
             sizes="(max-width: 768px) 50vw, (max-width: 1200px) 33vw"
             style={{ objectFit: "cover", objectPosition: "center" }}
