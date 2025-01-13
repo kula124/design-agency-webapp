@@ -95,6 +95,16 @@ export function Navigation({ pages }: NavigationProps) {
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleSignIn = async () => {
+    router.push("/signin");
+    router.refresh();
+  };
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.refresh();
+  };
+
   useClickOutside(navRef, closeMenu);
 
   const { data: session, isPending } = authClient.useSession();
@@ -123,20 +133,12 @@ export function Navigation({ pages }: NavigationProps) {
         ) : session ? (
           <div className="flex items-center gap-4">
             <span className="text-sm font-bold">{session.user?.name}</span>
-            <Button
-              ghost
-              iconClassName="hidden"
-              onClick={() => authClient.signOut()}
-            >
+            <Button ghost iconClassName="hidden" onClick={handleSignOut}>
               Sign Out
             </Button>
           </div>
         ) : (
-          <Button
-            ghost
-            iconClassName="hidden"
-            onClick={() => router.push("/signin")}
-          >
+          <Button ghost iconClassName="hidden" onClick={handleSignIn}>
             Sign In
           </Button>
         )}
