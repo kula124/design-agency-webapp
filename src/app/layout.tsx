@@ -4,8 +4,6 @@ import "./globals.css";
 import { Navigation } from "@/components/navigation";
 import { Footer } from "@/components/footer";
 import { getMainNavigation } from "@/lib/api";
-import { auth } from "@/lib/auth"; // path to your Better Auth server instance
-import { headers } from "next/headers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -40,19 +38,12 @@ export default async function RootLayout({
     ?.map((navItem) => navItem?.fields)
     .filter((navItem) => navItem !== undefined);
 
-  const session = await auth.api.getSession({
-    headers: headers(),
-  });
-
   return (
     <html lang="en">
       <body
         className={`${inter.variable} ${lato.variable} antialiased bg-brand-fill text-base min-h-svh flex flex-col`}
       >
         <Navigation pages={pages} />
-        {session && session.user && (
-          <p className="text-rose-700">Welcome, {session.user.name}</p>
-        )}
         {children}
         <Footer />
       </body>
