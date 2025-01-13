@@ -1,15 +1,16 @@
 "use client";
 
-import { useState } from "react";
+import { useState } from "react"; // Remove useEffect
 import { authClient } from "@/lib/auth-client";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 
-export default function SignIn() {
+export default function SignInPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
 
   const router = useRouter();
+  const searchParams = useSearchParams();
 
   const signIn = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,9 +24,17 @@ export default function SignIn() {
             // Loading state is already set
           },
           onSuccess: () => {
-            // Redirect to the dashboard
-            // You can use Next.js router here
-            router.replace("/");
+            const redirectTo = searchParams.get("redirectTo");
+            const decodedRedirectTo = redirectTo
+              ? decodeURIComponent(redirectTo)
+              : "/";
+
+            // Redirect to home if the redirect URL is the sign-in page
+            if (decodedRedirectTo.includes("/signin")) {
+              router.push("/");
+            } else {
+              router.push(decodedRedirectTo);
+            }
           },
           onError: (ctx) => {
             alert(ctx.error.message);

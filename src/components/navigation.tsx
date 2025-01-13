@@ -96,7 +96,8 @@ export function Navigation({ pages }: NavigationProps) {
   const closeMenu = () => setIsMenuOpen(false);
 
   const handleSignIn = async () => {
-    router.push("/signin");
+    const redirectTo = encodeURIComponent(pathname);
+    router.push(`/signin?redirectTo=${redirectTo}`);
     router.refresh();
   };
 
