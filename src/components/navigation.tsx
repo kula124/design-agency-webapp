@@ -2,11 +2,13 @@
 
 import { useState, useRef } from "react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { usePathname, useRouter } from "next/navigation";
 import Logo from "./logo";
 import { cn } from "@/lib/utils";
 import { useClickOutside } from "@/hooks/useClickOutside";
 import { TypeNavItem } from "@/content-types";
+import { authClient } from "@/lib/auth-client";
+import Button from "@/components/ui/button";
 
 // This is essentially the same as if we had written:
 //
@@ -86,13 +88,27 @@ type NavigationProps = {
 };
 
 export function Navigation({ pages }: NavigationProps) {
+  const router = useRouter();
   const pathname = usePathname();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const navRef = useRef<HTMLDivElement>(null);
   const toggleMenu = () => setIsMenuOpen(!isMenuOpen);
   const closeMenu = () => setIsMenuOpen(false);
 
+  const handleSignIn = async () => {
+    const redirectTo = encodeURIComponent(pathname);
+    router.push(`/signin?redirectTo=${redirectTo}`);
+    router.refresh();
+  };
+
+  const handleSignOut = async () => {
+    await authClient.signOut();
+    router.refresh();
+  };
+
   useClickOutside(navRef, closeMenu);
+
+  const { data: session, isPending } = authClient.useSession();
 
   return (
     <nav
@@ -110,6 +126,23 @@ export function Navigation({ pages }: NavigationProps) {
             .filter((page) => page.includeInProd)
             .map((page, index) => processPage(page, index, pathname))}
         </ul>
+
+        {isPending ? (
+          <Button ghost iconClassName="hidden">
+            Loading...
+          </Button>
+        ) : session ? (
+          <div className="flex items-center gap-4">
+            <span className="text-sm font-bold">{session.user?.name}</span>
+            <Button ghost iconClassName="hidden" onClick={handleSignOut}>
+              Sign Out
+            </Button>
+          </div>
+        ) : (
+          <Button ghost iconClassName="hidden" onClick={handleSignIn}>
+            Sign In
+          </Button>
+        )}
 
         {/* Visible on mobile */}
         <Hamburger isOpen={isMenuOpen} toggleMenu={toggleMenu} />
