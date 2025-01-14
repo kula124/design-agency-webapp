@@ -1,4 +1,4 @@
-import { getNavigation } from "@/lib/api";
+import { getMainNavigation } from "@/lib/api";
 import Logo from "./logo";
 import {
   FaFacebookSquare,
@@ -20,10 +20,10 @@ const services = [
 ];
 
 export async function Footer() {
-  const pages = await getNavigation();
-  const sitemap = pages
-    .filter((page) => page.includeInProd)
-    .map((page) => page.title);
+  const data = await getMainNavigation();
+  const sitemap = data.fields.navItems
+    ?.map((navItem) => navItem?.fields.title)
+    .filter((navItem) => navItem !== undefined);
 
   return (
     <footer className="bg-brand-text-strong py-12 text-center space-y-12">
